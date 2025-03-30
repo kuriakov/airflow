@@ -35,13 +35,20 @@ RUN pip install apache-airflow[postgres]==${AIRFLOW_VERSION}
 # Дополнительная настройка чтобы можно было редактировать код
 # Внутри веб интерфейса
 RUN pip install airflow-code-editor
-RUN pip install black fs-s3fs fs-gcsfs
-
+RUN pip install black
+RUN pip install fs-s3fs
+RUN pip install --upgrade setuptools setuptools_scm
+RUN pip install fs-gcsfs
+RUN pip install clickhouse_driver airflow_clickhouse_plugin apache-airflow-providers-telegram
 # Слздадим отдельную папку для нашего скрипта запуска
 # Затем скопируем сам скрипт и после чего выдадим расширеные права
 RUN mkdir /project
 COPY scripts/ /project/scripts/
 RUN chmod +x /project/scripts/init.sh
+
+# Добавляем конфиг с ключом для шифрования паролей в метабд
+ # (!!) TODO: не хранить в открытом виде
+ENV AIRFLOW__CORE__FERNET_KEY="SsowvGNfCA7o-7ChBE_OxYcOMk3hvl_4Hrj8LJEAhmg="
 
 # Запускаем sh скрипт
 # Начнет процесс инициализации airflow

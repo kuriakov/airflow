@@ -11,7 +11,7 @@ airflow users create \
           --lastname admin \
           --role Admin \
           --email admin@example.org \
-          -p 12345
+          --password 12345
 
 # Запуск шедулера и вебсервера
 airflow scheduler & airflow webserver

@@ -32,6 +32,16 @@ services:
       - ./airflow/dags:/usr/local/airflow/dags
       - ./airflow/plugins:/root/airflow/plugins
       - logs:/usr/local/airflow/logs
+      - ./scripts:/project/scripts
+
+  # Adminer - веб-интерфейс для работы с БД
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - 8081:8080
 
 volumes:
   pgdata:
